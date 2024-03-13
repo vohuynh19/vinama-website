@@ -9,7 +9,13 @@ module.exports = {
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        sky_1: "url('/images/star-sky-1.png')",
+        sky_2: "url('/images/star-sky-2.png')",
+        sky_3: "url('/images/star-sky-3.png')",
+      },
+    },
   },
   darkMode: "class",
   plugins: [nextui()],
