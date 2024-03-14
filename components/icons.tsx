@@ -212,3 +212,171 @@ export const NextUILogo: React.FC<IconSvgProps> = (props) => {
     </svg>
   );
 };
+
+export const MouseLogo: React.FC<IconSvgProps> = (props) => {
+  const { width, height = 40 } = props;
+
+  return (
+    <svg
+      width={width}
+      height={height}
+      viewBox="0 0 45 59"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <rect
+        x="1"
+        y="1"
+        width="43"
+        height="57"
+        rx="21.5"
+        stroke="white"
+        stroke-width="2"
+      />
+      <path
+        d="M23.5 10.5V25"
+        stroke="white"
+        stroke-width="2"
+        stroke-linecap="round"
+      />
+    </svg>
+  );
+};
+
+export const VolumeIcon: React.FC<IconSvgProps> = (props) => {
+  const { width, height = 60 } = props;
+
+  return (
+    <svg
+      width={width}
+      height={height}
+      viewBox="0 0 60 60"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M31.8187 11.3532C31.2332 11.0284 30.5714 10.8664 29.9021 10.8838C29.2327 10.9013 28.5803 11.0977 28.0125 11.4525L16.3369 18.75H9.375C7.88316 18.75 6.45242 19.3427 5.39752 20.3976C4.34263 21.4525 3.75 22.8832 3.75 24.375V35.625C3.75 37.1169 4.34263 38.5476 5.39752 39.6025C6.45242 40.6574 7.88316 41.25 9.375 41.25H16.3369L28.0125 48.5475C28.5796 48.902 29.2312 49.0983 29.8997 49.1162C30.5682 49.1341 31.2294 48.9729 31.8146 48.6493C32.3999 48.3257 32.8879 47.8514 33.2282 47.2757C33.5685 46.7 33.7487 46.0438 33.75 45.375V14.625C33.7487 13.9571 33.5689 13.3016 33.2294 12.7264C32.8899 12.1512 32.4029 11.6771 31.8187 11.3532ZM30 45.375L17.8687 37.785C17.5708 37.5988 17.2264 37.5 16.875 37.5H9.375C8.87772 37.5 8.40081 37.3025 8.04918 36.9509C7.69754 36.5992 7.5 36.1223 7.5 35.625V24.375C7.5 23.8778 7.69754 23.4009 8.04918 23.0492C8.40081 22.6976 8.87772 22.5 9.375 22.5H16.875C17.2264 22.5 17.5708 22.4013 17.8687 22.215L30 14.625V45.375Z"
+        fill="white"
+      />
+      <path
+        d="M40.3247 18.2063C39.9335 18.511 39.679 18.9583 39.6168 19.4502C39.5546 19.9422 39.6898 20.4387 39.9928 20.8313C42.0226 23.4545 43.1239 26.6775 43.1239 29.9944C43.1239 33.3112 42.0226 36.5342 39.9928 39.1575C39.8386 39.3517 39.7243 39.5746 39.6568 39.8133C39.5893 40.0519 39.5697 40.3016 39.5994 40.5479C39.629 40.7941 39.7072 41.0321 39.8294 41.2479C39.9517 41.4637 40.1155 41.6531 40.3115 41.8052C40.5074 41.9572 40.7316 42.0689 40.971 42.1337C41.2105 42.1985 41.4604 42.2152 41.7063 42.1827C41.9522 42.1503 42.1892 42.0693 42.4036 41.9446C42.618 41.8199 42.8055 41.6539 42.9553 41.4563C45.4956 38.1754 46.874 34.1437 46.874 29.9944C46.874 25.8451 45.4956 21.8133 42.9553 18.5325C42.6497 18.1405 42.2009 17.886 41.7076 17.8248C41.2143 17.7636 40.7169 17.9008 40.3247 18.2063Z"
+        fill="white"
+      />
+      <path
+        d="M51.2086 13.9464C51.0693 13.7409 50.8906 13.565 50.6829 13.4291C50.4751 13.2931 50.2424 13.1998 49.9983 13.1545C49.7542 13.1092 49.5036 13.1129 49.2609 13.1652C49.0182 13.2176 48.7883 13.3176 48.5846 13.4595C48.3809 13.6014 48.2074 13.7823 48.0741 13.9918C47.9409 14.2013 47.8506 14.4352 47.8084 14.6798C47.7663 14.9245 47.7732 15.1751 47.8287 15.4171C47.8842 15.6591 47.9872 15.8877 48.1317 16.0895C50.9758 20.1707 52.5006 25.0257 52.5006 30.0001C52.5006 34.9746 50.9758 39.8296 48.1317 43.9108C47.8551 44.319 47.7505 44.8197 47.8405 45.3045C47.9304 45.7893 48.2077 46.2192 48.6123 46.501C49.0169 46.7828 49.5163 46.8939 50.0022 46.8102C50.4881 46.7265 50.9215 46.4548 51.2086 46.0539C54.4907 41.3438 56.2503 35.741 56.2503 30.0001C56.2503 24.2593 54.4907 18.6565 51.2086 13.9464Z"
+        fill="white"
+      />
+    </svg>
+  );
+};
+
+export const DateIcon: React.FC<IconSvgProps> = (props) => {
+  const { width, height = 24, color = "#959595" } = props;
+
+  return (
+    <svg
+      width={width}
+      height={height}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M8 1.99219V4.99219"
+        stroke={color}
+        stroke-width="1.5"
+        stroke-miterlimit="10"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M16 1.99219V4.99219"
+        stroke={color}
+        stroke-width="1.5"
+        stroke-miterlimit="10"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M3.5 9.08203H20.5"
+        stroke={color}
+        stroke-width="1.5"
+        stroke-miterlimit="10"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M21 8.49219V16.9922C21 19.9922 19.5 21.9922 16 21.9922H8C4.5 21.9922 3 19.9922 3 16.9922V8.49219C3 5.49219 4.5 3.49219 8 3.49219H16C19.5 3.49219 21 5.49219 21 8.49219Z"
+        stroke={color}
+        stroke-width="1.5"
+        stroke-miterlimit="10"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M15.6937 13.6924H15.7027"
+        stroke={color}
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M15.6937 16.6924H15.7027"
+        stroke={color}
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M11.9945 13.6924H12.0035"
+        stroke={color}
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M11.9945 16.6924H12.0035"
+        stroke={color}
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M8.29529 13.6924H8.30427"
+        stroke={color}
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M8.29529 16.6924H8.30427"
+        stroke={color}
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+};
+
+export const ArrowIcon: React.FC<IconSvgProps> = (props) => {
+  const { width = 44, height = 44 } = props;
+
+  return (
+    <svg
+      width={width}
+      height={height}
+      viewBox="0 0 44 43"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M26.6328 14.3256L10.5078 30.4506L13.0416 32.9844L29.1666 16.8594L29.1666 30.4506L32.7499 30.4506L32.7499 10.7423L13.0416 10.7423L13.0416 14.3256L26.6328 14.3256Z"
+        fill="white"
+      />
+    </svg>
+  );
+};
