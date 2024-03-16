@@ -33,7 +33,10 @@ const renderCard = (text: string, subText: string) => {
   );
 };
 
-const renderTitle = (text: string, color: "purple2" | "white" = "purple2") => (
+export const renderTitle = (
+  text: string,
+  color: "purple2" | "white" = "purple2",
+) => (
   <h3
     className={clsx(
       title({

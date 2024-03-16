@@ -4,6 +4,7 @@ import {
   DroneSection,
   ServiceSection,
   SubcribeSection,
+  renderTitle,
 } from "@/components/sections";
 import { textConfig } from "@/config/text";
 import DefaultLayout from "@/layouts/default";
@@ -12,23 +13,6 @@ import Image from "next/image";
 import { useEffect } from "react";
 
 export default function IndexPage() {
-  const renderTitle = (
-    text: string,
-    color: "purple2" | "white" = "purple2",
-  ) => (
-    <h3
-      className={clsx(
-        title({
-          color,
-          size: "lgXX",
-        }),
-        "uppercase mb-4 font-black",
-      )}
-    >
-      {text}
-    </h3>
-  );
-
   useEffect(() => {
     const scrollSnap = `
       <style>

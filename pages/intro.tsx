@@ -3,6 +3,7 @@ import {
   ContactNowSection,
   ServiceSection,
   SubcribeSection,
+  renderTitle,
 } from "@/components/sections";
 import { textConfig } from "@/config/text";
 import DefaultLayout from "@/layouts/default";
@@ -27,23 +28,6 @@ export default function IndexPage() {
         `;
     document.head.insertAdjacentHTML("beforeend", scrollSnap);
   }, []);
-
-  const renderTitle = (
-    text: string,
-    color: "purple2" | "white" = "purple2",
-  ) => (
-    <h3
-      className={clsx(
-        title({
-          color,
-          size: "lgXX",
-        }),
-        "uppercase mb-4 font-black",
-      )}
-    >
-      {text}
-    </h3>
-  );
 
   return (
     <DefaultLayout>

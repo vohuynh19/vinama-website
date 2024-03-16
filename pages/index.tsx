@@ -7,6 +7,7 @@ import {
   NewsSection,
   ServiceSection,
   SubcribeSection,
+  renderTitle,
 } from "@/components/sections";
 import { textConfig } from "@/config/text";
 import DefaultLayout from "@/layouts/default";
@@ -15,48 +16,6 @@ import Image from "next/image";
 import { useEffect } from "react";
 
 export default function IndexPage() {
-  const renderTitle = (
-    text: string,
-    color: "purple2" | "white" = "purple2",
-  ) => (
-    <h3
-      className={clsx(
-        title({
-          color,
-          size: "lgXX",
-        }),
-        "uppercase mb-4 font-black",
-      )}
-    >
-      {text}
-    </h3>
-  );
-
-  const renderCard = (text: string, subText: string) => {
-    return (
-      <div className="relative h-[300px] w-[300px] lg:h-[400px] lg:w-[400px] flex flex-col justify-center items-center border-1 border-white rounded-3xl">
-        <div className="h-full w-full bg-[#183049] absolute rounded-3xl opacity-30 z-0"></div>
-        <div className="z-10  flex flex-col justify-center items-center">
-          {renderTitle(text)}
-
-          <h3
-            className={clsx(
-              title({
-                color: "white",
-                size: "sm",
-              }),
-              "mb-6 font-black",
-            )}
-          >
-            {subText}
-          </h3>
-
-          <NavigateButton>{textConfig.common.contact}</NavigateButton>
-        </div>
-      </div>
-    );
-  };
-
   useEffect(() => {
     const scrollSnap = `
       <style>
