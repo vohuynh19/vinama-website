@@ -5,58 +5,24 @@ export const siteConfig = {
   description: "Make beautiful websites regardless of your design experience.",
   navItems: [
     {
-      label: "Home",
+      label: "TRANG CHỦ",
       href: "/",
     },
     {
-      label: "Docs",
-      href: "/docs",
+      label: "GIỚI THIỆU VINAMATECH",
+      href: "/intro",
     },
     {
-      label: "Pricing",
-      href: "/pricing",
+      label: "DỰ ÁN ĐÃ THỰC HIỆN",
+      href: "/news",
     },
     {
-      label: "Blog",
-      href: "/blog",
+      label: "DỊCH VỤ CUNG CẤP",
+      href: "/services",
     },
     {
-      label: "About",
-      href: "/about",
-    },
-  ],
-  navMenuItems: [
-    {
-      label: "Profile",
-      href: "/profile",
-    },
-    {
-      label: "Dashboard",
-      href: "/dashboard",
-    },
-    {
-      label: "Projects",
-      href: "/projects",
-    },
-    {
-      label: "Team",
-      href: "/team",
-    },
-    {
-      label: "Calendar",
-      href: "/calendar",
-    },
-    {
-      label: "Settings",
-      href: "/settings",
-    },
-    {
-      label: "Help & Feedback",
-      href: "/help-feedback",
-    },
-    {
-      label: "Logout",
-      href: "/logout",
+      label: "LIÊN HỆ",
+      href: "/contact",
     },
   ],
   links: {

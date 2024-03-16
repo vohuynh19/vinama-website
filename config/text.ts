@@ -44,7 +44,7 @@ export const textConfig = {
       desc4: "1000 DRONE",
     },
     section7: {
-      title: "SẴN SÀNG ĐẺ VIẾT CÂU CHUYỆN CỦA BẠN LÊN BẦU TRỜI",
+      title: "SẴN SÀNG ĐỂ VIẾT CÂU CHUYỆN CỦA BẠN LÊN BẦU TRỜI",
       description:
         "Hãy liên lạc với chúng tôi để nhận được các phương án trình diễn và quảng cáo cho thương hiệu của bạn",
     },

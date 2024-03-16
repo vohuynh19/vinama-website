@@ -9,7 +9,7 @@ export default function DefaultLayout({
   return (
     <div className="relative flex flex-col h-screen">
       <Head />
-      <div className="absolute w-full">
+      <div className="fixed z-50 w-full">
         <Navbar />
       </div>
       {children}

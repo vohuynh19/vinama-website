@@ -27,6 +27,7 @@ module.exports = {
           layout: {}, // light theme layout tokens
           colors: {
             primary: "#524FFF",
+            foreground: "#FFFFFF",
           }, // light theme colors
         },
       },

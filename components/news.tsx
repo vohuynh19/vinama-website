@@ -93,9 +93,8 @@ export const mockNewsData: INews[] = [
 ];
 
 export const NewsItem: FC<{
-  type: "vertical" | "horizontal";
   newsData: INews;
-}> = ({ type, newsData }) => {
+}> = ({ newsData }) => {
   const {
     categories,
     imageUri,
@@ -153,54 +152,11 @@ export const NewsItem: FC<{
     </div>
   );
 
-  if (type === "vertical") {
-    return (
-      <div>
-        <div className="h-[320px] w-full">
-          <Image
-            width={1024}
-            height={1024}
-            alt="preview image"
-            src={imageUri}
-            style={{ objectFit: "cover" }}
-            className="w-full h-full rounded-lg"
-          />
-        </div>
-        <div>
-          {categories.map((category) => (
-            <div className={clsx(tag(), "uppercase mt-2")} key={category.id}>
-              {category.name}
-            </div>
-          ))}
-        </div>
-        <div
-          className={title({
-            color: "white",
-          })}
-        >
-          {newTitle}
-        </div>
-        <DateItem />
-
-        <p
-          className={clsx(
-            subtitle({
-              color: "white",
-            }),
-            "line-clamp-4",
-          )}
-        >
-          {newSubtitle}
-        </p>
-      </div>
-    );
-  }
-
   return (
-    <div className="flex flex-row">
-      <div className="flex-1 h-[200px]">
+    <div className="flex flex-col">
+      <div className="w-full h-[240px] sm:h-[300px]">
         <Image
-          className="w-full h-full rounded-lg"
+          className="w-full h-full rounded-lg object-cover"
           width={1024}
           height={1024}
           alt="preview image"
@@ -208,40 +164,38 @@ export const NewsItem: FC<{
         />
       </div>
 
-      <div className="flex-1 flex flex-col pl-4">
-        <div className="flex">
-          {categories.map((category) => (
-            <div className={clsx(tag(), "uppercase")} key={category.id}>
-              {category.name}
-            </div>
-          ))}
-        </div>
-
-        <div
-          className={clsx(
-            title({
-              color: "white",
-              size: "sm1",
-            }),
-            "",
-          )}
-        >
-          {newTitle}
-        </div>
-
-        <DateItem />
-
-        <p
-          className={clsx(
-            subtitle({
-              color: "white",
-            }),
-            "line-clamp-3",
-          )}
-        >
-          {newSubtitle}
-        </p>
+      <div className="mt-2">
+        {categories.map((category) => (
+          <div className={clsx(tag(), "uppercase")} key={category.id}>
+            {category.name}
+          </div>
+        ))}
       </div>
+
+      <div
+        className={clsx(
+          title({
+            color: "white",
+            size: "sm1",
+          }),
+          "line-clamp-1 xl:line-clamp-2",
+        )}
+      >
+        {newTitle}
+      </div>
+
+      <DateItem />
+
+      <p
+        className={clsx(
+          subtitle({
+            color: "white",
+          }),
+          "line-clamp-2 sm:line-clamp-0 md:line-clamp-2",
+        )}
+      >
+        {newSubtitle}
+      </p>
     </div>
   );
 };
