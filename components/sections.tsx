@@ -7,6 +7,7 @@ import { Button } from "@nextui-org/react";
 import { ArrowIcon, FacebookLogo, InstagramLogo, TwitterLogo } from "./icons";
 import Link from "next/link";
 import { NewsItem, mockNewsData } from "./news";
+import { fontSaira } from "@/config/fonts";
 
 const renderCard = (text: string, subText: string) => {
   return (
@@ -339,6 +340,70 @@ export const NewsSection = () => {
           <div className="w-full flex justify-center mt-4">
             <NavigateButton>{textConfig.common.seeMore}</NavigateButton>
           </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export const ContactFormSection = () => {
+  return (
+    <section className="flex lg:h-screen bg-sky_1 bg-contain relative px-4">
+      <div className="w-full h-full flex justify-center items-center py-8 mt-24 lg:mt-4">
+        <div className="container flex flex-col justify-center items-center">
+          {renderTitle(textConfig.contact.section2.title, "white")}
+
+          <div className="flex flex-col w-full max-w-3xl mb-8 mt-8">
+            <label
+              className={
+                (clsx(fontSaira.className),
+                "text-primary text-xl lg:text-3xl mb-3")
+              }
+            >
+              {textConfig.contact.section2.label1}*
+            </label>
+            <input
+              placeholder={textConfig.contact.section2.placeholder1}
+              className={clsx(
+                fontSaira.className,
+                "text-lg lg:text-xl outline-0 border-t-0 border-b-1 border-l-0 border-r-0 bg-transparent border-[#666666]",
+              )}
+            />
+
+            <label
+              className={
+                (clsx(fontSaira.className),
+                "text-primary text-xl lg:text-3xl mb-3 mt-8")
+              }
+            >
+              {textConfig.contact.section2.label2}*
+            </label>
+            <input
+              placeholder={textConfig.contact.section2.placeholder2}
+              className={clsx(
+                fontSaira.className,
+                "text-lg lg:text-xl outline-0 border-t-0 border-b-1 border-l-0 border-r-0 bg-transparent border-[#666666]",
+              )}
+            />
+
+            <label
+              className={
+                (clsx(fontSaira.className),
+                "text-primary text-xl lg:text-3xl mb-3 mt-8")
+              }
+            >
+              {textConfig.contact.section2.label3}*
+            </label>
+            <input
+              placeholder={textConfig.contact.section2.placeholder3}
+              className={clsx(
+                fontSaira.className,
+                "text-lg lg:text-xl outline-0 border-t-0 border-b-1 border-l-0 border-r-0 bg-transparent border-[#666666]",
+              )}
+            />
+          </div>
+
+          <NavigateButton>{textConfig.contact.section2.sent}</NavigateButton>
         </div>
       </div>
     </section>

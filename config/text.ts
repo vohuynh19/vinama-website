@@ -90,4 +90,26 @@ export const textConfig = {
       description: "Cảm xúc hùng vĩ sẽ không phai đi",
     },
   },
+  contact: {
+    section1: {
+      title: "LIÊN HỆ",
+      description: "Cảm xúc hùng vĩ sẽ không phai đi",
+    },
+    section2: {
+      title: "ĐỂ LẠI THÔNG TIN ĐỂ NHẬN TƯ VẤN",
+      label1: "Tên",
+      placeholder1: "Nhập tên",
+      label2: "Email",
+      placeholder2: "Nhập email",
+      label3: "Bạn cần chúng tôi cung cấp thông tin gì?",
+      placeholder3: "Nhập nội dung",
+      sent: "GỬI TIN",
+    },
+  },
+  news: {
+    section1: {
+      title: "TIN TỨC VINAMETECH",
+      description: "Cảm xúc hùng vĩ sẽ không phai đi",
+    },
+  },
 };
