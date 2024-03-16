@@ -46,7 +46,7 @@ export const Navbar = () => {
             </NavbarBrand>
           </NavbarContent>
 
-          <NavbarContent className="basis-1 pl-4" justify="end">
+          <NavbarContent className="basis-1 pl-4 z-50 h-[64px]" justify="end">
             <NavbarMenuToggle className="text-white" />
           </NavbarContent>
         </div>
@@ -57,17 +57,20 @@ export const Navbar = () => {
           <div className="mx-4 mt-2 flex flex-col gap-2">
             {siteConfig.navItems.map((item, index) => (
               <NavbarMenuItem key={`${item}-${index}`}>
-                <Link
-                  color={item.href === route.asPath ? "primary" : "foreground"}
-                  href={item.href}
-                  size="lg"
-                  className={clsx(
-                    fontSairaCondensed.className,
-                    "font-black text-4xl lg:text-6xl mb-8",
-                  )}
-                >
-                  {item.label}
-                </Link>
+                <NextLink href={item.href}>
+                  <Link
+                    color={
+                      item.href === route.asPath ? "primary" : "foreground"
+                    }
+                    size="lg"
+                    className={clsx(
+                      fontSairaCondensed.className,
+                      "font-black text-4xl lg:text-6xl mb-8",
+                    )}
+                  >
+                    {item.label}
+                  </Link>
+                </NextLink>
               </NavbarMenuItem>
             ))}
           </div>

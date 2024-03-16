@@ -154,7 +154,7 @@ export const NewsItem: FC<{
 
   return (
     <div className="flex flex-col">
-      <div className="w-full h-[240px] sm:h-[300px]">
+      <div className="w-full h-[240px] sm:h-[320px] md:h-[200px] xl:h-[320px]">
         <Image
           className="w-full h-full rounded-lg object-cover"
           width={1024}
@@ -191,7 +191,7 @@ export const NewsItem: FC<{
           subtitle({
             color: "white",
           }),
-          "line-clamp-2 sm:line-clamp-0 md:line-clamp-2",
+          "line-clamp-2 md:line-clamp-1 xl:line-clamp-2",
         )}
       >
         {newSubtitle}

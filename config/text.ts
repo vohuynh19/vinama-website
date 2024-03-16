@@ -3,6 +3,11 @@ export const textConfig = {
     seeMore: "Xem thêm",
     contact: "Liên hệ",
     contactNow: "Liên hệ ngay",
+    phone: "(+84) 90 45 48 088",
+    email: "INFO@VINAMATECH.COM",
+    emailForNews: "Đăng ký nhận thông tin mới nhất",
+    subcribe: "ĐĂNG KÝ",
+    copyright: "Copyright (C) 2023 Vinamatech",
   },
   "/": {
     section1: {
@@ -47,6 +52,42 @@ export const textConfig = {
       title: "SẴN SÀNG ĐỂ VIẾT CÂU CHUYỆN CỦA BẠN LÊN BẦU TRỜI",
       description:
         "Hãy liên lạc với chúng tôi để nhận được các phương án trình diễn và quảng cáo cho thương hiệu của bạn",
+    },
+  },
+  intro: {
+    section1: {
+      title: "CÂU CHUYỆN VINAMATECH",
+      description: "Cảm xúc hùng vĩ sẽ không phai đi",
+    },
+    section2: {
+      title: "TẦM NHÌN",
+      description:
+        "Trở thành công ty đứng đầu trong việc ứng dụng các công nghệ tiên tiến của thế giới  kiến tạo ra các sản phẩm quảng cáo chất lượng, khác biệt từ đó thúc đẩy hoạt động kinh doanh của khách hàng",
+    },
+    section3: {
+      title: "SỨ MỆNH",
+      description1:
+        "Lan tỏa thông điệp tích cực của khách hàng một cách sáng tạo tới công chúng.",
+      description2: "Phát triển thương hiệu khách hàng.",
+      description3:
+        "Tạo điểm nhấn cho những sự kiện du lịch, văn hóa và quảng bá thương hiệu của doanh nghiệp",
+    },
+    section4: {
+      title: "DỊCH VỤ VINAMATECH",
+      service1: "Drone ngoài trời",
+      service2: "Drone trong nhà",
+      service3: "Drone rồng, phượng hoàng",
+    },
+    section5: {
+      title: "SẴN SÀNG ĐỂ VIẾT CÂU CHUYỆN CỦA BẠN LÊN BẦU TRỜI",
+      description:
+        "Hãy liên lạc với chúng tôi để nhận được các phương án trình diễn và quảng cáo cho thương hiệu của bạn",
+    },
+  },
+  services: {
+    section1: {
+      title: "DỊCH VỤ VINAMETECH",
+      description: "Cảm xúc hùng vĩ sẽ không phai đi",
     },
   },
 };
