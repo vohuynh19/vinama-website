@@ -15,12 +15,17 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { getAllUser } from "@/firebase/modules/user";
 import { SyncLoader } from "react-spinners";
+import moment from "moment";
 
 export const MarkdownEditor = dynamic(() => import("@uiw/react-md-editor"), {
   ssr: false,
 });
 
 const columns = [
+  {
+    key: "createdAt",
+    label: "Thời gian",
+  },
   {
     key: "email",
     label: "Email",
@@ -62,7 +67,9 @@ export default function IndexPage() {
             <TableRow key={item.id}>
               {(columnKey) => (
                 <TableCell className="!text-white">
-                  {getKeyValue(item, columnKey)}
+                  {columnKey.toString() === "createdAt"
+                    ? `${moment(getKeyValue(item, columnKey)).format("hh:mm DD t\\háng MM YYYY")}`
+                    : getKeyValue(item, columnKey)}
                 </TableCell>
               )}
             </TableRow>
