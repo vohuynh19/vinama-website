@@ -13,6 +13,7 @@ import { useQuery } from "@tanstack/react-query";
 import { deleteNews, getNews, updateNews } from "@/firebase/modules/news";
 import { toast } from "react-toastify";
 import { queryClient } from "@/config/client";
+import { SyncLoader } from "react-spinners";
 
 const MarkdownEditor = dynamic(() => import("@uiw/react-md-editor"), {
   ssr: false,
@@ -29,7 +30,7 @@ export default function IndexPage() {
   const router = useRouter();
   const id = router.query.id as string;
 
-  const { data } = useQuery({
+  const { data, isFetching } = useQuery({
     queryKey: ["news"],
     queryFn: () => getNews(id),
   });
@@ -75,6 +76,12 @@ export default function IndexPage() {
 
   return (
     <AdminLayout>
+      {isFetching && (
+        <div className="w-screen h-screen flex justify-center items-center absolute">
+          <SyncLoader color="#524FFF" />
+        </div>
+      )}
+
       <div className="flex w-full flex-col justify-center items-center px-4">
         <div className="container w-full">
           <h1

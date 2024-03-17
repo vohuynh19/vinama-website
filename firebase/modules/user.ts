@@ -1,6 +1,26 @@
-import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  getDocs,
+  limit,
+  orderBy,
+  query,
+  where,
+} from "firebase/firestore";
 import { db } from "../init";
 import moment from "moment";
+
+export const getAllUser = async (take = 10000) => {
+  const dataQuery = query(
+    collection(db, "users"),
+    orderBy("updatedAt", "desc"),
+    limit(take),
+  );
+  return (await getDocs(dataQuery)).docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  })) as IUser[];
+};
 
 export const registerUser = async ({
   email,

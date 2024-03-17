@@ -15,6 +15,7 @@ import { FC, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { registerUser } from "@/firebase/modules/user";
 import { toast } from "react-toastify";
+import { SyncLoader } from "react-spinners";
 
 const CardComp: FC<{
   text: string;
@@ -256,6 +257,7 @@ export const SubcribeSection = () => {
 
       await registerUser({
         email: emailRef.current.value,
+        content: "Đăng ký nhận thông tin mới nhất",
       });
 
       toast.success("Đăng ký theo dõi thành công");
@@ -383,7 +385,7 @@ export const SubcribeSection = () => {
 
 export const NewsSection = () => {
   const router = useRouter();
-  const { data } = useQuery({
+  const { data, isFetching } = useQuery({
     queryKey: ["news", "home"],
     queryFn: () => getPageNews(3),
   });
@@ -394,6 +396,12 @@ export const NewsSection = () => {
 
   return (
     <section className="flex lg:h-screen bg-sky_1 bg-contain relative px-4">
+      {isFetching && (
+        <div className="w-screen h-screen flex justify-center items-center absolute">
+          <SyncLoader color="#524FFF" />
+        </div>
+      )}
+
       <div className={fullScreen({ type: "relative" })}>
         <div className="container h-full flex flex-col py-8 md:py-2 justify-center items-center">
           <div className="text-center mb-4 lg:mb-0 mt-12 xl:mb-4">
