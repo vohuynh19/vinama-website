@@ -31,12 +31,8 @@ export const siteConfig = {
       href: "/admin",
     },
     {
-      label: "Tin tức",
+      label: "Bài viết",
       href: "/admin/news",
-    },
-    {
-      label: "Dịch vụ",
-      href: "/admin/services",
     },
   ],
 };

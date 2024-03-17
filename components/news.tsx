@@ -295,12 +295,12 @@ export const NewsInListItem: FC<{
         />
       </div>
 
-      <div className="mt-2">
-        {categories.map((category) => (
+      <div className="mt-4">
+        {/* {categories.map((category) => (
           <div className={clsx(tag(), "uppercase")} key={category.id}>
             {category.name}
           </div>
-        ))}
+        ))} */}
       </div>
 
       <div
@@ -409,12 +409,12 @@ export const NewsItem: FC<{
         />
       </div>
 
-      <div className="mt-2">
-        {categories.map((category) => (
+      <div className="mt-4">
+        {/* {categories.map((category) => (
           <div className={clsx(tag(), "uppercase")} key={category.id}>
             {category.name}
           </div>
-        ))}
+        ))} */}
       </div>
 
       <div

@@ -60,9 +60,9 @@ export default function IndexPage() {
           >
             <div className="container w-full flex flex-col relative py-40">
               <div className="relative p-12">
-                <div className="top-0 left-0 right-0 bottom-0 bg-[#ffffff] absolute rounded-3xl opacity-10 z-0"></div>
+                <div className="top-0 left-0 right-0 bottom-0 bg-[#ffffff] absolute rounded-3xl opacity-10 z-10" />
 
-                <div className="z-50">
+                <div className="relative z-50">
                   <h3
                     className={clsx(
                       title({
@@ -91,6 +91,10 @@ export default function IndexPage() {
                         `!${fontSaira.className}`,
                         "!bg-transparent",
                       )}
+                      style={{
+                        fontFamily: fontSaira.style.fontFamily,
+                        fontStyle: fontSaira.style.fontStyle,
+                      }}
                       source={data.markdownContent}
                     />
                   </div>

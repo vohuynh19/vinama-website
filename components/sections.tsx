@@ -11,8 +11,10 @@ import { fontSaira } from "@/config/fonts";
 import { useMediaQuery } from "react-responsive";
 import { useQuery } from "@tanstack/react-query";
 import { getPageNews } from "@/firebase/modules/news";
-import { FC, useState } from "react";
+import { FC, useRef, useState } from "react";
 import { useRouter } from "next/router";
+import { registerUser } from "@/firebase/modules/user";
+import { toast } from "react-toastify";
 
 const CardComp: FC<{
   text: string;
@@ -63,6 +65,7 @@ export const renderTitle = (
 );
 
 export const ServiceSection = () => {
+  const router = useRouter();
   return (
     <section className="flex lg:h-screen bg-sky_1 bg-contain relative px-4">
       <div
@@ -77,7 +80,12 @@ export const ServiceSection = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 xl:gap-16">
             <div className="flex flex-col items-center justify-center">
-              <div className="w-[240px] h-[240px] rounded-full overflow-hidden mb-8">
+              <div
+                className="w-[240px] h-[240px] rounded-full overflow-hidden mb-8 cursor-pointer"
+                onClick={() =>
+                  router.push("http://localhost:3000/news/GV0lt5TDzbqvdfwYXzAE")
+                }
+              >
                 <Image
                   alt="service1"
                   width={600}
@@ -99,7 +107,10 @@ export const ServiceSection = () => {
               </div>
             </div>
             <div className="flex flex-col items-center justify-center">
-              <div className="w-[240px] h-[240px] rounded-full overflow-hidden mb-8">
+              <div
+                className="w-[240px] h-[240px] rounded-full overflow-hidden mb-8 cursor-pointer"
+                onClick={() => router.push("news/KR0ogdJHMUxuYcMfG2Ic")}
+              >
                 <Image
                   alt="service2"
                   width={600}
@@ -121,7 +132,12 @@ export const ServiceSection = () => {
               </div>
             </div>
             <div className="flex flex-col items-center justify-center">
-              <div className="w-[240px] h-[240px] rounded-full overflow-hidden mb-8">
+              <div
+                className="w-[240px] h-[240px] rounded-full overflow-hidden mb-8 cursor-pointer"
+                onClick={() =>
+                  router.push("http://localhost:3000/news/EncL6aoctOVeNjimNDBD")
+                }
+              >
                 <Image
                   alt="service3"
                   width={600}
@@ -229,6 +245,33 @@ export const ContactNowSection = () => {
 };
 
 export const SubcribeSection = () => {
+  const emailRef = useRef<HTMLInputElement>(null);
+
+  const submitForm = async () => {
+    try {
+      if (!emailRef.current) {
+        toast.error("Đăng ký thất bại, vui lòng điền đủ thông tin.");
+        return;
+      }
+
+      await registerUser({
+        email: emailRef.current.value,
+      });
+
+      toast.success("Đăng ký theo dõi thành công");
+    } catch (error) {
+      const err = error as {
+        message: string;
+      };
+      if (err.message === "Email already exists") {
+        toast.error("Email đã được đăng ký");
+        return;
+      }
+
+      if (error) toast.error("Đăng ký thất bại, vui lòng điền đủ thông tin.");
+    }
+  };
+
   return (
     <section className="flex lg:h-screen bg-sky_1 bg-contain px-4 py-12 md:py-4">
       <div className="w-full flex items-center justify-center">
@@ -273,6 +316,7 @@ export const SubcribeSection = () => {
           <div className="w-full flex p-3 border-1 border-[#FFFFFF] rounded-lg relative max-w-xl">
             <div className="top-0 left-0 right-0 bottom-0 bg-[#183049] absolute rounded-lg opacity-30 z-0"></div>
             <input
+              ref={emailRef}
               type="text"
               className="flex-1 text-[#FFFFFF] bg-transparent text-28px lg:text-[32px] border-none focus:outline-none h-12 lg:h-16 z-10 pr-4"
             />
@@ -287,6 +331,7 @@ export const SubcribeSection = () => {
                 "font-black rounded-lg uppercase px-8 py-0 h-12 lg:h-16",
               )}
               endContent={<ArrowIcon width={44} height={44} />}
+              onClick={() => submitForm()}
             >
               {textConfig.common.subcribe}
             </Button>
@@ -356,9 +401,24 @@ export const NewsSection = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-8">
-            {data[0] && <NewsItem newsData={data[0]} />}
-            {data[1] && <NewsItem newsData={data[1]} />}
-            {data[2] && <NewsItem newsData={data[2]} />}
+            {data[0] && (
+              <NewsItem
+                newsData={data[0]}
+                onClick={(id) => router.push(`/news/${id}`)}
+              />
+            )}
+            {data[1] && (
+              <NewsItem
+                newsData={data[1]}
+                onClick={(id) => router.push(`/news/${id}`)}
+              />
+            )}
+            {data[2] && (
+              <NewsItem
+                newsData={data[2]}
+                onClick={(id) => router.push(`/news/${id}`)}
+              />
+            )}
           </div>
 
           <div className="w-full flex justify-center mt-4">
@@ -373,6 +433,29 @@ export const NewsSection = () => {
 };
 
 export const ContactFormSection = () => {
+  const nameRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const contentRef = useRef<HTMLInputElement>(null);
+
+  const submitForm = () => {
+    try {
+      if (!nameRef.current || !emailRef.current || !contentRef.current) {
+        toast.error("Đăng ký thất bại, vui lòng điền đủ thông tin.");
+        return;
+      }
+
+      registerUser({
+        name: nameRef.current.value,
+        email: emailRef.current.value,
+        content: contentRef.current.value,
+      });
+
+      toast.success("Đăng ký theo dõi thành công");
+    } catch (error) {
+      toast.error("Đăng ký thất bại, vui lòng điền đủ thông tin.");
+    }
+  };
+
   return (
     <section className="flex lg:h-screen bg-sky_1 bg-contain relative px-4">
       <div className="w-full h-full flex justify-center items-center py-8 mt-24 lg:mt-4">
@@ -389,10 +472,11 @@ export const ContactFormSection = () => {
               {textConfig.contact.section2.label1}*
             </label>
             <input
+              ref={nameRef}
               placeholder={textConfig.contact.section2.placeholder1}
               className={clsx(
                 fontSaira.className,
-                "text-lg lg:text-xl outline-0 border-t-0 border-b-1 border-l-0 border-r-0 bg-transparent border-[#666666]",
+                "text-lg lg:text-xl outline-0 border-t-0 border-b-1 border-l-0 border-r-0 bg-transparent border-[#666666] text-white py-2",
               )}
             />
 
@@ -405,10 +489,11 @@ export const ContactFormSection = () => {
               {textConfig.contact.section2.label2}*
             </label>
             <input
+              ref={emailRef}
               placeholder={textConfig.contact.section2.placeholder2}
               className={clsx(
                 fontSaira.className,
-                "text-lg lg:text-xl outline-0 border-t-0 border-b-1 border-l-0 border-r-0 bg-transparent border-[#666666]",
+                "text-lg lg:text-xl outline-0 border-t-0 border-b-1 border-l-0 border-r-0 bg-transparent border-[#666666] text-white py-2",
               )}
             />
 
@@ -421,15 +506,18 @@ export const ContactFormSection = () => {
               {textConfig.contact.section2.label3}*
             </label>
             <input
+              ref={contentRef}
               placeholder={textConfig.contact.section2.placeholder3}
               className={clsx(
                 fontSaira.className,
-                "text-lg lg:text-xl outline-0 border-t-0 border-b-1 border-l-0 border-r-0 bg-transparent border-[#666666]",
+                "text-lg lg:text-xl outline-0 border-t-0 border-b-1 border-l-0 border-r-0 bg-transparent border-[#666666] text-white py-2",
               )}
             />
           </div>
 
-          <NavigateButton>{textConfig.contact.section2.sent}</NavigateButton>
+          <NavigateButton onClick={() => submitForm()}>
+            {textConfig.contact.section2.sent}
+          </NavigateButton>
         </div>
       </div>
     </section>
