@@ -1,4 +1,3 @@
-import { NavigateButton } from "@/components/button";
 import { MouseLogo } from "@/components/icons";
 import { fullScreen, subtitle, title } from "@/components/primitives";
 import {

@@ -1,4 +1,5 @@
-import { fullScreen, subtitle } from "@/components/primitives";
+import { mockNewsData } from "@/components/news";
+import { fullScreen, subtitle, title } from "@/components/primitives";
 import {
   ContactNowSection,
   ListNewsSection,
@@ -20,13 +21,15 @@ export default function IndexPage() {
     return null;
   }
 
+  const data = mockNewsData[1];
+
   return (
     <DefaultLayout>
       <div className="bg-black">
         {/**
          * SECTION 1
          */}
-        <section className="flex lg:h-screen bg-sky_1 bg-contain relative px-4">
+        <section className="flex min-h-screen bg-sky_1 bg-contain relative px-4">
           <div className={fullScreen()}>
             <div className="sm:w-full md:w-3/5">
               <Image
@@ -44,41 +47,39 @@ export default function IndexPage() {
               fullScreen({
                 type: "relative",
               }),
-              "flex justify-center items-center",
             )}
           >
-            <div className="container h-full flex flex-col justify-center">
-              <div className="h-[240px]" />
-              {renderTitle(textConfig.news.section1.title, "white")}
-              <h3
-                className={subtitle({
-                  color: "white",
-                  size: "lg",
-                })}
-              >
-                {textConfig.news.section1.description}
-              </h3>
+            <div className="container w-full flex flex-col relative py-40">
+              <div className="relative p-12">
+                <div className="top-0 left-0 right-0 bottom-0 bg-[#ffffff] absolute rounded-3xl opacity-10 z-0"></div>
+
+                <div className="z-50">
+                  <h3
+                    className={clsx(
+                      title({
+                        color: "white",
+                        size: "lg",
+                      }),
+                      "uppercase mb-4 font-black",
+                    )}
+                  >
+                    {data.title}
+                  </h3>
+                  <h3
+                    className={clsx(
+                      subtitle({
+                        color: "white",
+                        size: "md1",
+                      }),
+                    )}
+                  >
+                    {data.subTitle}
+                  </h3>
+                </div>
+              </div>
             </div>
           </div>
         </section>
-
-        {/**
-         * SECTION 2
-         */}
-
-        <ListNewsSection />
-
-        {/**
-         * SECTION 3
-         */}
-
-        <ContactNowSection />
-
-        {/**
-         * SECTION 4
-         */}
-
-        <SubcribeSection />
       </div>
     </DefaultLayout>
   );

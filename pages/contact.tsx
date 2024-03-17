@@ -1,12 +1,5 @@
 import { fullScreen, subtitle } from "@/components/primitives";
-import {
-  ContactFormSection,
-  ContactNowSection,
-  DroneSection,
-  ServiceSection,
-  SubcribeSection,
-  renderTitle,
-} from "@/components/sections";
+import { ContactFormSection, renderTitle } from "@/components/sections";
 import { textConfig } from "@/config/text";
 import DefaultLayout from "@/layouts/default";
 import clsx from "clsx";

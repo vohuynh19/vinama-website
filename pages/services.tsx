@@ -1,4 +1,4 @@
-import { fullScreen, subtitle, title } from "@/components/primitives";
+import { fullScreen, subtitle } from "@/components/primitives";
 import {
   ContactNowSection,
   DroneSection,

@@ -3,11 +3,12 @@ import { fullScreen, subtitle, title } from "./primitives";
 import { textConfig } from "@/config/text";
 import Image from "next/image";
 import { NavigateButton } from "./button";
-import { Button } from "@nextui-org/react";
+import { Button, Pagination } from "@nextui-org/react";
 import { ArrowIcon, FacebookLogo, InstagramLogo, TwitterLogo } from "./icons";
 import Link from "next/link";
-import { NewsItem, mockNewsData } from "./news";
+import { NewsInListItem, NewsItem, mockNewsData } from "./news";
 import { fontSaira } from "@/config/fonts";
+import { useMediaQuery } from "react-responsive";
 
 const renderCard = (text: string, subText: string) => {
   return (
@@ -404,6 +405,90 @@ export const ContactFormSection = () => {
           </div>
 
           <NavigateButton>{textConfig.contact.section2.sent}</NavigateButton>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export const ListNewsSection = () => {
+  const isSm = useMediaQuery({ maxDeviceWidth: 767 });
+  const isMd = useMediaQuery({ minDeviceWidth: 768, maxDeviceWidth: 1023 });
+  const isLg = useMediaQuery({ minDeviceWidth: 1024 });
+
+  return (
+    <section className="flex bg-sky_1 bg-cover relative py-4 px-4">
+      <div
+        className={clsx(
+          fullScreen({
+            type: "relative",
+          }),
+          "w-full flex-col items-center justify-center",
+        )}
+      >
+        {isSm && (
+          <div>
+            {mockNewsData.map((news) => {
+              return <NewsInListItem key={news.id} newsData={news} />;
+            })}
+          </div>
+        )}
+        {isMd && (
+          <div className="container grid grid-cols-2 gap-8">
+            <div>
+              {mockNewsData
+                .filter((_, index) => index % 2 == 0)
+                .map((news) => {
+                  return <NewsInListItem key={news.id} newsData={news} />;
+                })}
+            </div>
+            <div>
+              {mockNewsData
+                .filter((_, index) => index % 2 == 1)
+                .map((news) => {
+                  return <NewsInListItem key={news.id} newsData={news} />;
+                })}
+            </div>
+          </div>
+        )}
+        {isLg && (
+          <div className="container grid grid-cols-3 gap-8">
+            <div>
+              {mockNewsData
+                .filter((_, index) => index % 3 == 0)
+                .map((news) => {
+                  return <NewsInListItem key={news.id} newsData={news} />;
+                })}
+            </div>
+            <div>
+              {mockNewsData
+                .filter((_, index) => index % 3 == 1)
+                .map((news) => {
+                  return <NewsInListItem key={news.id} newsData={news} />;
+                })}
+            </div>
+            <div>
+              {mockNewsData
+                .filter((_, index) => index % 3 == 2)
+                .map((news) => {
+                  return <NewsInListItem key={news.id} newsData={news} />;
+                })}
+            </div>
+          </div>
+        )}
+        <div className="container">
+          <Pagination
+            size="lg"
+            showShadow
+            color="primary"
+            total={10}
+            initialPage={1}
+            classNames={{
+              base: "flex items-center justify-center",
+              item: "bg-transparent text-[#ffffff] hover:text-primary hover:!bg-transparent",
+              cursor: "text-primary font-bold bg-transparent",
+            }}
+          />
         </div>
       </div>
     </section>
