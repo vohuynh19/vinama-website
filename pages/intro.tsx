@@ -7,27 +7,12 @@ import {
 } from "@/components/sections";
 import { textConfig } from "@/config/text";
 import DefaultLayout from "@/layouts/default";
+import { useSnapScroll } from "@/layouts/useSnapScroll";
 import clsx from "clsx";
 import Image from "next/image";
-import { useEffect } from "react";
 
 export default function IndexPage() {
-  useEffect(() => {
-    const scrollSnap = `
-          <style>
-            @media screen and (min-width: 1024px){
-              html {
-                scroll-behavior: smooth;
-                scroll-snap-type: y mandatory;
-              }
-              section{
-                scroll-snap-align: start;
-              }
-            }
-          </style>
-        `;
-    document.head.insertAdjacentHTML("beforeend", scrollSnap);
-  }, []);
+  useSnapScroll();
 
   return (
     <DefaultLayout>
