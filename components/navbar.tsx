@@ -59,13 +59,10 @@ export const Navbar = () => {
               <NavbarMenuItem key={`${item}-${index}`}>
                 <NextLink href={item.href}>
                   <Link
-                    color={
-                      item.href === route.asPath ? "primary" : "foreground"
-                    }
                     size="lg"
                     className={clsx(
                       fontSairaCondensed.className,
-                      "font-black text-4xl lg:text-6xl mb-8",
+                      `font-black text-4xl lg:text-6xl mb-8 ${item.href === route.asPath ? "text-[#524FFF]" : "text-white"}`,
                     )}
                   >
                     {item.label}

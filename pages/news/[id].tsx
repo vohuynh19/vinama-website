@@ -1,27 +1,36 @@
-import { mockNewsData } from "@/components/news";
 import { fullScreen, subtitle, title } from "@/components/primitives";
-import {
-  ContactNowSection,
-  ListNewsSection,
-  SubcribeSection,
-  renderTitle,
-} from "@/components/sections";
-import { textConfig } from "@/config/text";
 import DefaultLayout from "@/layouts/default";
 import clsx from "clsx";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+
+import "@uiw/react-md-editor/markdown-editor.css";
+import "@uiw/react-markdown-preview/markdown.css";
+import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/router";
+import { getNews } from "@/firebase/modules/news";
+
+import { fontSaira } from "@/config/fonts";
+import dynamic from "next/dynamic";
+
+const EditerMarkdown = dynamic(
+  () =>
+    import("@uiw/react-md-editor").then((mod) => {
+      return mod.default.Markdown;
+    }),
+  { ssr: false },
+);
 
 export default function IndexPage() {
-  const [isClient, setIsClient] = useState(false);
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-  if (!isClient) {
+  const router = useRouter();
+  const id = router.query.id as string;
+  const { data } = useQuery({
+    queryKey: ["news", id],
+    queryFn: () => getNews(id),
+  });
+
+  if (!data) {
     return null;
   }
-
-  const data = mockNewsData[1];
 
   return (
     <DefaultLayout>
@@ -75,6 +84,16 @@ export default function IndexPage() {
                   >
                     {data.subTitle}
                   </h3>
+
+                  <div data-color-mode="dark">
+                    <EditerMarkdown
+                      className={clsx(
+                        `!${fontSaira.className}`,
+                        "!bg-transparent",
+                      )}
+                      source={data.markdownContent}
+                    />
+                  </div>
                 </div>
               </div>
             </div>

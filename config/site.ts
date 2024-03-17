@@ -1,8 +1,8 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: "Next.js + NextUI",
-  description: "Make beautiful websites regardless of your design experience.",
+  name: "Vinamatech - Cảm xúc hùng vĩ sẽ không phai đi",
+  description: "Cảm xúc hùng vĩ sẽ không phai đi",
   navItems: [
     {
       label: "TRANG CHỦ",
@@ -25,11 +25,18 @@ export const siteConfig = {
       href: "/contact",
     },
   ],
-  links: {
-    github: "https://github.com/nextui-org/nextui",
-    twitter: "https://twitter.com/getnextui",
-    docs: "https://nextui-docs-v2.vercel.app",
-    discord: "https://discord.gg/9b6yyZKmH4",
-    sponsor: "https://patreon.com/jrgarciadev",
-  },
+  admin: [
+    {
+      label: "Khách hàng",
+      href: "/admin",
+    },
+    {
+      label: "Tin tức",
+      href: "/admin/news",
+    },
+    {
+      label: "Dịch vụ",
+      href: "/admin/services",
+    },
+  ],
 };

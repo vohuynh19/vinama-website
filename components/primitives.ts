@@ -20,7 +20,7 @@ export const title = tv({
     size: {
       base: "text-base",
       sm1: "text-2xl leading-7",
-      sm: "text-3xl lg:text-4xl",
+      sm: "text-xl sm:text-2xl md:text-3xl lg:text-4xl",
       md: "text-[2.3rem] lg:text-5xl leading-9",
       lg: "text-4xl lg:text-6xl",
       lgXX: "font-black text-[60px] leading-[70px] xl:text-[100px] xl:leading-[110px] 2xl:text-[8vw] 2xl:leading-[8vw]",
@@ -55,14 +55,15 @@ export const subtitle = tv({
       md2: "text-[24px] font-regular",
       lg: "text-[16px] leading-[20px] lg:text-[24px] lg:leading-[32px] xl:text-[32px] xl:leading-[42px] font-regular",
     },
-
     color: {
       white: "text-white",
       purple: "text-[#524FFF]",
       grey: "text-[#959595]",
     },
   },
-  defaultVariants: {},
+  defaultVariants: {
+    color: "white",
+  },
 });
 
 export const tag = tv({

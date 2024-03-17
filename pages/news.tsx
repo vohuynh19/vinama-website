@@ -9,16 +9,10 @@ import { textConfig } from "@/config/text";
 import DefaultLayout from "@/layouts/default";
 import clsx from "clsx";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 export default function IndexPage() {
-  const [isClient, setIsClient] = useState(false);
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-  if (!isClient) {
-    return null;
-  }
+  const router = useRouter();
 
   return (
     <DefaultLayout>
@@ -66,7 +60,7 @@ export default function IndexPage() {
          * SECTION 2
          */}
 
-        <ListNewsSection />
+        <ListNewsSection onClick={(id) => router.push(`/news/${id}`)} />
 
         {/**
          * SECTION 3

@@ -4,6 +4,10 @@ import { DateIcon } from "./icons";
 import { subtitle, tag, title } from "./primitives";
 import clsx from "clsx";
 import moment from "moment";
+import ImageFallback from "./image";
+
+const failbackImg =
+  "https://media.istockphoto.com/id/1409329028/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=_zOuJu755g2eEUioiOUdz_mHKJQJn-tDgIAhQzyeKUQ=";
 export const mockNewsData: INews[] = [
   {
     id: "1",
@@ -215,8 +219,10 @@ export const mockNewsData: INews[] = [
 
 export const NewsInListItem: FC<{
   newsData: INews;
-}> = ({ newsData }) => {
+  onClick?: (id: string) => void;
+}> = ({ newsData, onClick }) => {
   const {
+    id,
     categories,
     imageUri,
     title: newTitle,
@@ -224,6 +230,8 @@ export const NewsInListItem: FC<{
     author,
     subTitle: newSubtitle,
   } = newsData;
+
+  console.log("updatedAt", updatedAt);
 
   const DateItem = () => (
     <div
@@ -244,7 +252,7 @@ export const NewsInListItem: FC<{
           }),
           "mr-2",
         )}
-      >{`${moment(updatedAt).day()} tháng ${moment(updatedAt).month()} ${moment(updatedAt).year()}`}</div>
+      >{`${moment(updatedAt).format("DD t\\háng MM YYYY")}`}</div>
 
       <div className="mr-1" />
 
@@ -275,13 +283,15 @@ export const NewsInListItem: FC<{
 
   return (
     <div className="flex flex-col mb-4">
-      <div className="w-full">
-        <Image
+      <div className="w-full cursor-pointer" onClick={() => onClick?.(id)}>
+        {/*  */}
+        <ImageFallback
           className="w-full h-full rounded-lg object-cover"
           width={1024}
           height={1024}
           alt="preview image"
           src={imageUri}
+          fallbackSrc={failbackImg}
         />
       </div>
 
@@ -323,8 +333,10 @@ export const NewsInListItem: FC<{
 
 export const NewsItem: FC<{
   newsData: INews;
-}> = ({ newsData }) => {
+  onClick?: (id: string) => void;
+}> = ({ newsData, onClick }) => {
   const {
+    id,
     categories,
     imageUri,
     title: newTitle,
@@ -352,7 +364,7 @@ export const NewsItem: FC<{
           }),
           "mr-2",
         )}
-      >{`${moment(updatedAt).day()} tháng ${moment(updatedAt).month()} ${moment(updatedAt).year()}`}</div>
+      >{`${moment(updatedAt).format("DD t\\háng MM YYYY")}`}</div>
 
       <div className="mr-1" />
 
@@ -383,13 +395,17 @@ export const NewsItem: FC<{
 
   return (
     <div className="flex flex-col">
-      <div className="w-full h-[240px] sm:h-[320px] md:h-[200px] xl:h-[320px]">
-        <Image
+      <div
+        className="w-full h-[240px] sm:h-[320px] md:h-[200px] xl:h-[320px] cursor-pointer"
+        onClick={() => onClick?.(id)}
+      >
+        <ImageFallback
           className="w-full h-full rounded-lg object-cover"
           width={1024}
           height={1024}
           alt="preview image"
           src={imageUri}
+          fallbackSrc={failbackImg}
         />
       </div>
 

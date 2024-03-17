@@ -11,6 +11,7 @@ import {
 import { textConfig } from "@/config/text";
 import DefaultLayout from "@/layouts/default";
 import clsx from "clsx";
+import Head from "next/head";
 import Image from "next/image";
 import { useEffect } from "react";
 

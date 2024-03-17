@@ -9,8 +9,16 @@ import Link from "next/link";
 import { NewsInListItem, NewsItem, mockNewsData } from "./news";
 import { fontSaira } from "@/config/fonts";
 import { useMediaQuery } from "react-responsive";
+import { useQuery } from "@tanstack/react-query";
+import { getPageNews } from "@/firebase/modules/news";
+import { FC, useState } from "react";
+import { useRouter } from "next/router";
 
-const renderCard = (text: string, subText: string) => {
+const CardComp: FC<{
+  text: string;
+  subText: string;
+}> = ({ text, subText }) => {
+  const router = useRouter();
   return (
     <div className="relative h-[300px] w-[300px] lg:h-[400px] lg:w-[400px] flex flex-col justify-center items-center border-1 border-white rounded-3xl">
       <div className="h-full w-full bg-[#183049] absolute rounded-3xl opacity-30 z-0"></div>
@@ -29,7 +37,9 @@ const renderCard = (text: string, subText: string) => {
           {subText}
         </h3>
 
-        <NavigateButton>{textConfig.common.contact}</NavigateButton>
+        <NavigateButton onClick={() => router.push("/contact")}>
+          {textConfig.common.contact}
+        </NavigateButton>
       </div>
     </div>
   );
@@ -151,31 +161,31 @@ export const DroneSection = () => {
         <div className="container w-full lg:h-full flex-col flex lg:flex-row justify-center items-center">
           <div className="grid grid-cols-1 gap-4 sm:gap-8 sm:grid-cols-2 lg:grid-cols-4">
             <div className="flex justify-center">
-              {renderCard(
-                textConfig["/"].section6.title1,
-                textConfig["/"].section6.desc1,
-              )}
+              <CardComp
+                text={textConfig["/"].section6.title1}
+                subText={textConfig["/"].section6.desc1}
+              />
             </div>
 
             <div className="flex justify-center">
-              {renderCard(
-                textConfig["/"].section6.title2,
-                textConfig["/"].section6.desc2,
-              )}
+              <CardComp
+                text={textConfig["/"].section6.title2}
+                subText={textConfig["/"].section6.desc2}
+              />
             </div>
 
             <div className="flex justify-center">
-              {renderCard(
-                textConfig["/"].section6.title3,
-                textConfig["/"].section6.desc3,
-              )}
+              <CardComp
+                text={textConfig["/"].section6.title3}
+                subText={textConfig["/"].section6.desc3}
+              />
             </div>
 
             <div className="flex justify-center">
-              {renderCard(
-                textConfig["/"].section6.title4,
-                textConfig["/"].section6.desc4,
-              )}
+              <CardComp
+                text={textConfig["/"].section6.title4}
+                subText={textConfig["/"].section6.desc4}
+              />
             </div>
           </div>
         </div>
@@ -185,6 +195,7 @@ export const DroneSection = () => {
 };
 
 export const ContactNowSection = () => {
+  const router = useRouter();
   return (
     <section className="flex lg:h-screen bg-sky_1 bg-contain px-4 py-12 md:py-4">
       <div
@@ -208,7 +219,9 @@ export const ContactNowSection = () => {
             {textConfig["/"].section7.description}
           </div>
 
-          <NavigateButton>{textConfig.common.contactNow}</NavigateButton>
+          <NavigateButton onClick={() => router.push("/contact")}>
+            {textConfig.common.contactNow}
+          </NavigateButton>
         </div>
       </div>
     </section>
@@ -324,6 +337,16 @@ export const SubcribeSection = () => {
 };
 
 export const NewsSection = () => {
+  const router = useRouter();
+  const { data } = useQuery({
+    queryKey: ["news", "home"],
+    queryFn: () => getPageNews(3),
+  });
+
+  if (!data || data.length === 0) {
+    return null;
+  }
+
   return (
     <section className="flex lg:h-screen bg-sky_1 bg-contain relative px-4">
       <div className={fullScreen({ type: "relative" })}>
@@ -333,13 +356,15 @@ export const NewsSection = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-8">
-            <NewsItem newsData={mockNewsData[0]} />
-            <NewsItem newsData={mockNewsData[1]} />
-            <NewsItem newsData={mockNewsData[2]} />
+            {data[0] && <NewsItem newsData={data[0]} />}
+            {data[1] && <NewsItem newsData={data[1]} />}
+            {data[2] && <NewsItem newsData={data[2]} />}
           </div>
 
           <div className="w-full flex justify-center mt-4">
-            <NavigateButton>{textConfig.common.seeMore}</NavigateButton>
+            <NavigateButton onClick={() => router.push("/news")}>
+              {textConfig.common.seeMore}
+            </NavigateButton>
           </div>
         </div>
       </div>
@@ -411,10 +436,29 @@ export const ContactFormSection = () => {
   );
 };
 
-export const ListNewsSection = () => {
+const LIST_LENGTH = 12;
+
+export const ListNewsSection: FC<{
+  onClick: (id: string) => void;
+}> = ({ onClick }) => {
+  const { data: queryData } = useQuery({
+    queryKey: ["news", "page"],
+    queryFn: () => getPageNews(),
+  });
+
+  const [page, setPage] = useState(1);
+
   const isSm = useMediaQuery({ maxDeviceWidth: 767 });
   const isMd = useMediaQuery({ minDeviceWidth: 768, maxDeviceWidth: 1023 });
   const isLg = useMediaQuery({ minDeviceWidth: 1024 });
+
+  const data = queryData?.filter((_, idx) => {
+    return idx >= LIST_LENGTH * (page - 1) && idx < LIST_LENGTH * page;
+  });
+
+  if (!queryData || queryData.length === 0 || !data || data.length === 0) {
+    return;
+  }
 
   return (
     <section className="flex bg-sky_1 bg-cover relative py-4 px-4">
@@ -428,25 +472,43 @@ export const ListNewsSection = () => {
       >
         {isSm && (
           <div>
-            {mockNewsData.map((news) => {
-              return <NewsInListItem key={news.id} newsData={news} />;
+            {data.map((news) => {
+              return (
+                <NewsInListItem
+                  key={news.id}
+                  newsData={news}
+                  onClick={onClick}
+                />
+              );
             })}
           </div>
         )}
         {isMd && (
           <div className="container grid grid-cols-2 gap-8">
             <div>
-              {mockNewsData
+              {data
                 .filter((_, index) => index % 2 == 0)
                 .map((news) => {
-                  return <NewsInListItem key={news.id} newsData={news} />;
+                  return (
+                    <NewsInListItem
+                      key={news.id}
+                      newsData={news}
+                      onClick={onClick}
+                    />
+                  );
                 })}
             </div>
             <div>
-              {mockNewsData
+              {data
                 .filter((_, index) => index % 2 == 1)
                 .map((news) => {
-                  return <NewsInListItem key={news.id} newsData={news} />;
+                  return (
+                    <NewsInListItem
+                      key={news.id}
+                      newsData={news}
+                      onClick={onClick}
+                    />
+                  );
                 })}
             </div>
           </div>
@@ -454,34 +516,54 @@ export const ListNewsSection = () => {
         {isLg && (
           <div className="container grid grid-cols-3 gap-8">
             <div>
-              {mockNewsData
+              {data
                 .filter((_, index) => index % 3 == 0)
                 .map((news) => {
-                  return <NewsInListItem key={news.id} newsData={news} />;
+                  return (
+                    <NewsInListItem
+                      key={news.id}
+                      newsData={news}
+                      onClick={onClick}
+                    />
+                  );
                 })}
             </div>
             <div>
-              {mockNewsData
+              {data
                 .filter((_, index) => index % 3 == 1)
                 .map((news) => {
-                  return <NewsInListItem key={news.id} newsData={news} />;
+                  return (
+                    <NewsInListItem
+                      key={news.id}
+                      newsData={news}
+                      onClick={onClick}
+                    />
+                  );
                 })}
             </div>
             <div>
-              {mockNewsData
+              {data
                 .filter((_, index) => index % 3 == 2)
                 .map((news) => {
-                  return <NewsInListItem key={news.id} newsData={news} />;
+                  return (
+                    <NewsInListItem
+                      key={news.id}
+                      newsData={news}
+                      onClick={onClick}
+                    />
+                  );
                 })}
             </div>
           </div>
         )}
+
         <div className="container">
           <Pagination
+            onChange={(value) => setPage(value)}
             size="lg"
             showShadow
             color="primary"
-            total={10}
+            total={Math.ceil(queryData.length / LIST_LENGTH)}
             initialPage={1}
             classNames={{
               base: "flex items-center justify-center",
