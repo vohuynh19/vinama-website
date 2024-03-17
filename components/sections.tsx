@@ -537,7 +537,7 @@ const LIST_LENGTH = 12;
 export const ListNewsSection: FC<{
   onClick: (id: string) => void;
 }> = ({ onClick }) => {
-  const { data: queryData } = useQuery({
+  const { data: queryData, isFetching } = useQuery({
     queryKey: ["news", "page"],
     queryFn: () => getPageNews(),
   });
@@ -553,11 +553,17 @@ export const ListNewsSection: FC<{
   });
 
   if (!queryData || queryData.length === 0 || !data || data.length === 0) {
-    return;
+    return null;
   }
 
   return (
     <section className="flex bg-sky_1 bg-cover relative py-4 px-4">
+      {isFetching && (
+        <div className="w-screen h-screen flex justify-center items-center absolute">
+          <SyncLoader color="#524FFF" />
+        </div>
+      )}
+
       <div
         className={clsx(
           fullScreen({
