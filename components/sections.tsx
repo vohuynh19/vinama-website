@@ -83,9 +83,7 @@ export const ServiceSection = () => {
             <div className="flex flex-col items-center justify-center">
               <div
                 className="w-[240px] h-[240px] rounded-full overflow-hidden mb-8 cursor-pointer"
-                onClick={() =>
-                  router.push("http://localhost:3000/news/GV0lt5TDzbqvdfwYXzAE")
-                }
+                onClick={() => router.push("/news/GV0lt5TDzbqvdfwYXzAE")}
               >
                 <Image
                   alt="service1"
@@ -110,7 +108,7 @@ export const ServiceSection = () => {
             <div className="flex flex-col items-center justify-center">
               <div
                 className="w-[240px] h-[240px] rounded-full overflow-hidden mb-8 cursor-pointer"
-                onClick={() => router.push("news/KR0ogdJHMUxuYcMfG2Ic")}
+                onClick={() => router.push("/news/KR0ogdJHMUxuYcMfG2Ic")}
               >
                 <Image
                   alt="service2"
@@ -135,9 +133,7 @@ export const ServiceSection = () => {
             <div className="flex flex-col items-center justify-center">
               <div
                 className="w-[240px] h-[240px] rounded-full overflow-hidden mb-8 cursor-pointer"
-                onClick={() =>
-                  router.push("http://localhost:3000/news/EncL6aoctOVeNjimNDBD")
-                }
+                onClick={() => router.push("/news/EncL6aoctOVeNjimNDBD")}
               >
                 <Image
                   alt="service3"
@@ -563,7 +559,7 @@ export const ListNewsSection: FC<{
     item.title.toLowerCase().includes(search.toLowerCase()),
   );
 
-  const data = searchNews?.filter((_, idx) => {
+  const data = (searchNews || []).filter((_, idx) => {
     return idx >= LIST_LENGTH * (page - 1) && idx < LIST_LENGTH * page;
   });
 
@@ -576,10 +572,6 @@ export const ListNewsSection: FC<{
       setPage(Math.ceil(searchNews.length / LIST_LENGTH));
     }
   }, [page, searchNews?.length]);
-
-  if (!queryData || queryData.length === 0 || !data || data.length === 0) {
-    return null;
-  }
 
   return (
     <section className="flex flex-col items-center justify-center bg-sky_1 bg-cover relative py-4 px-4">
