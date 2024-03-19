@@ -14,13 +14,13 @@ import {
 import { db } from "../init";
 import moment from "moment";
 
-export const getPageNews = async (take = 1000): Promise<INews[]> => {
-  const dataQuery = query(
-    collection(db, "news"),
-    orderBy("updatedAt", "desc"),
-    limit(take),
-  );
-  return (await getDocs(dataQuery)).docs.map((doc) => ({
+function sortByDate(dateString1: string, dateString2: string) {
+  return new Date(dateString1) < new Date(dateString2) ? 1 : -1;
+}
+
+export const getPageNews = async (take = 10000): Promise<INews[]> => {
+  const dataQuery = query(collection(db, "news"), limit(take));
+  const data = (await getDocs(dataQuery)).docs.map((doc) => ({
     id: doc.id,
     categories: [
       {
@@ -30,6 +30,8 @@ export const getPageNews = async (take = 1000): Promise<INews[]> => {
     ],
     ...doc.data(),
   })) as INews[];
+
+  return data.sort((a, b) => sortByDate(a.updatedAt || "", b.updatedAt || ""));
 };
 
 export const getNews = async (id: string): Promise<INews> => {

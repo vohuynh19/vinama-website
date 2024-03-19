@@ -1,6 +1,8 @@
 import {
   addDoc,
   collection,
+  deleteDoc,
+  doc,
   getDocs,
   limit,
   orderBy,
@@ -48,4 +50,9 @@ export const registerUser = async ({
     updatedAt: moment().toString(),
     createdAt: moment().toString(),
   });
+};
+
+export const deleteUserById = (id: string) => {
+  const ref = doc(db, "users", id);
+  return deleteDoc(ref);
 };

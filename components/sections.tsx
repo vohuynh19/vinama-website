@@ -450,21 +450,31 @@ export const ContactFormSection = () => {
   const emailRef = useRef<HTMLInputElement>(null);
   const contentRef = useRef<HTMLInputElement>(null);
 
-  const submitForm = () => {
+  const submitForm = async () => {
     try {
       if (!nameRef.current || !emailRef.current || !contentRef.current) {
-        toast.error("Đăng ký thất bại, vui lòng điền đủ thông tin.");
+        toast.error("Gửi tin thất bại, vui lòng điền đủ thông tin.");
         return;
       }
 
-      registerUser({
+      await registerUser({
         name: nameRef.current.value,
         email: emailRef.current.value,
         content: contentRef.current.value,
       });
 
-      toast.success("Đăng ký theo dõi thành công");
+      toast.success(
+        "Gửi tin thành công, chúng tôi sẽ liên hệ bạn trong thời gian sớm nhất.",
+      );
     } catch (error) {
+      const err = error as {
+        message: string;
+      };
+      if (err.message === "Email already exists") {
+        toast.error("Email đã được đăng ký");
+        return;
+      }
+
       toast.error("Đăng ký thất bại, vui lòng điền đủ thông tin.");
     }
   };
