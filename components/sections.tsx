@@ -3,7 +3,7 @@ import { fullScreen, subtitle, title } from "./primitives";
 import { textConfig } from "@/config/text";
 import Image from "next/image";
 import { NavigateButton } from "./button";
-import { Button, Pagination } from "@nextui-org/react";
+import { Button, Input, Pagination } from "@nextui-org/react";
 import { ArrowIcon, FacebookLogo, InstagramLogo, TwitterLogo } from "./icons";
 import Link from "next/link";
 import { NewsInListItem, NewsItem, mockNewsData } from "./news";
@@ -11,7 +11,7 @@ import { fontSaira } from "@/config/fonts";
 import { useMediaQuery } from "react-responsive";
 import { useQuery } from "@tanstack/react-query";
 import { getPageNews } from "@/firebase/modules/news";
-import { FC, useRef, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { registerUser } from "@/firebase/modules/user";
 import { toast } from "react-toastify";
@@ -387,12 +387,21 @@ export const NewsSection = () => {
   const router = useRouter();
   const { data, isFetching } = useQuery({
     queryKey: ["news", "home"],
-    queryFn: () => getPageNews(3),
+    queryFn: () => getPageNews(),
   });
+
+  // Stable, ascending sort (use < for descending)
+  function sortByDate(dateString1: string, dateString2: string) {
+    return new Date(dateString1) < new Date(dateString2) ? 1 : -1;
+  }
 
   if (!data || data.length === 0) {
     return null;
   }
+
+  const news = data
+    .sort((a, b) => sortByDate(a.updatedAt || "", b.updatedAt || ""))
+    .slice(0, 3);
 
   return (
     <section className="flex lg:h-screen bg-sky_1 bg-contain relative px-4">
@@ -408,22 +417,22 @@ export const NewsSection = () => {
             {renderTitle(textConfig["/"].section4.title)}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-8">
+          <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-8">
             {data[0] && (
               <NewsItem
-                newsData={data[0]}
+                newsData={news[0]}
                 onClick={(id) => router.push(`/news/${id}`)}
               />
             )}
             {data[1] && (
               <NewsItem
-                newsData={data[1]}
+                newsData={news[1]}
                 onClick={(id) => router.push(`/news/${id}`)}
               />
             )}
             {data[2] && (
               <NewsItem
-                newsData={data[2]}
+                newsData={news[2]}
                 onClick={(id) => router.push(`/news/${id}`)}
               />
             )}
@@ -536,31 +545,58 @@ const LIST_LENGTH = 12;
 
 export const ListNewsSection: FC<{
   onClick: (id: string) => void;
-}> = ({ onClick }) => {
+  searchEnabled?: boolean;
+}> = ({ searchEnabled = false, onClick }) => {
   const { data: queryData, isFetching } = useQuery({
     queryKey: ["news", "page"],
     queryFn: () => getPageNews(),
   });
 
-  const [page, setPage] = useState(1);
-
   const isSm = useMediaQuery({ maxDeviceWidth: 767 });
   const isMd = useMediaQuery({ minDeviceWidth: 768, maxDeviceWidth: 1023 });
   const isLg = useMediaQuery({ minDeviceWidth: 1024 });
 
-  const data = queryData?.filter((_, idx) => {
+  const [page, setPage] = useState(1);
+  const [search, setSearch] = useState<string>("");
+
+  const searchNews = queryData?.filter((item) =>
+    item.title.toLowerCase().includes(search.toLowerCase()),
+  );
+
+  const data = searchNews?.filter((_, idx) => {
     return idx >= LIST_LENGTH * (page - 1) && idx < LIST_LENGTH * page;
   });
+
+  useEffect(() => {
+    if (!searchNews?.length || searchNews.length === 0) {
+      return;
+    }
+
+    if (page > Math.ceil(searchNews.length / LIST_LENGTH)) {
+      setPage(Math.ceil(searchNews.length / LIST_LENGTH));
+    }
+  }, [page, searchNews?.length]);
 
   if (!queryData || queryData.length === 0 || !data || data.length === 0) {
     return null;
   }
 
   return (
-    <section className="flex bg-sky_1 bg-cover relative py-4 px-4">
+    <section className="flex flex-col items-center justify-center bg-sky_1 bg-cover relative py-4 px-4">
       {isFetching && (
         <div className="w-screen h-screen flex justify-center items-center absolute">
           <SyncLoader color="#524FFF" />
+        </div>
+      )}
+
+      {searchEnabled && (
+        <div className="container w-full">
+          <Input
+            placeholder="Nhập tiêu đề bài viết để tìm kiếm"
+            className="mb-8"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
         </div>
       )}
 
@@ -619,7 +655,7 @@ export const ListNewsSection: FC<{
           <div className="container grid grid-cols-3 gap-8">
             <div>
               {data
-                .filter((_, index) => index % 3 == 0)
+                .filter((_, index) => index % 3 === 0)
                 .map((news) => {
                   return (
                     <NewsInListItem
@@ -632,7 +668,7 @@ export const ListNewsSection: FC<{
             </div>
             <div>
               {data
-                .filter((_, index) => index % 3 == 1)
+                .filter((_, index) => index % 3 === 1)
                 .map((news) => {
                   return (
                     <NewsInListItem
@@ -645,7 +681,7 @@ export const ListNewsSection: FC<{
             </div>
             <div>
               {data
-                .filter((_, index) => index % 3 == 2)
+                .filter((_, index) => index % 3 === 2)
                 .map((news) => {
                   return (
                     <NewsInListItem
@@ -665,7 +701,7 @@ export const ListNewsSection: FC<{
             size="lg"
             showShadow
             color="primary"
-            total={Math.ceil(queryData.length / LIST_LENGTH)}
+            total={Math.ceil((searchNews?.length || 0) / LIST_LENGTH)}
             initialPage={1}
             classNames={{
               base: "flex items-center justify-center",

@@ -26,7 +26,7 @@ export default function IndexPage() {
           className="mb-8"
           onClick={() => router.push("/admin/news/create")}
         >
-          TẠO MỚI
+          Tạo tin tức
         </Button>
       </div>
 
@@ -52,7 +52,10 @@ export default function IndexPage() {
         )}
       </div>
 
-      <ListNewsSection onClick={(id) => router.push(`/admin/news/${id}`)} />
+      <ListNewsSection
+        searchEnabled
+        onClick={(id) => router.push(`/admin/news/${id}`)}
+      />
     </AdminLayout>
   );
 }

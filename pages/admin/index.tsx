@@ -4,6 +4,7 @@ import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
 import dynamic from "next/dynamic";
 import {
+  Button,
   Table,
   TableBody,
   TableCell,
@@ -16,6 +17,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllUser } from "@/firebase/modules/user";
 import { SyncLoader } from "react-spinners";
 import moment from "moment";
+import { logout } from "@/firebase/modules/auth";
 
 export const MarkdownEditor = dynamic(() => import("@uiw/react-md-editor"), {
   ssr: false,
@@ -55,6 +57,11 @@ export default function IndexPage() {
           <SyncLoader color="#524FFF" />
         </div>
       )}
+      <div className="flex justify-center mb-8">
+        <Button variant="ghost" color="danger" onClick={() => logout()}>
+          Đăng xuất
+        </Button>
+      </div>
       <Table className="dark">
         <TableHeader columns={columns}>
           {(column) => (
