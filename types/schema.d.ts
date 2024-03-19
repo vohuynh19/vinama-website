@@ -26,3 +26,11 @@ interface IUser {
   updatedAt: string;
   createdAt: string;
 }
+
+interface IImage {
+  id: string;
+  name: string;
+  url: string;
+  updatedAt: string;
+  createdAt: string;
+}
