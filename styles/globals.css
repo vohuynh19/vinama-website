@@ -5,3 +5,13 @@
 .wmde-markdown img{
     width: 100%;
 }
+
+.wmde-markdown > ol > li {
+    display: list-item;
+    list-style: decimal !important;
+}
+
+.wmde-markdown > ul > li {
+    display: list-item;
+    list-style-type: disc !important;
+}
