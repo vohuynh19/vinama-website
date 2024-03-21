@@ -19,8 +19,12 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }: { params: { id: string } }) {
-  const data = await getNews(params.id);
-  return { props: { data } };
+  try {
+    const data = await getNews(params.id);
+    return { props: { data } };
+  } catch {
+    return { notFound: true };
+  }
 }
 
 const EditerMarkdown = dynamic(

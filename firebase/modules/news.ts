@@ -118,6 +118,6 @@ export const updateNews = async ({
 export const deleteNews = async (id: string) => {
   const ref = doc(db, "news", id);
   const res = deleteDoc(ref);
-  await revalidateNewsById(id);
+  revalidateNewsById(id);
   return res;
 };
