@@ -11,6 +11,8 @@ import { title } from "@/components/primitives";
 import clsx from "clsx";
 import { toast } from "react-toastify";
 import { createNews } from "@/firebase/modules/news";
+import { SyncLoader } from "react-spinners";
+import { useMutation } from "@tanstack/react-query";
 
 const MarkdownEditor = dynamic(() => import("@uiw/react-md-editor"), {
   ssr: false,
@@ -25,6 +27,11 @@ export default function IndexPage() {
   useAuthRoute();
 
   const router = useRouter();
+
+  const { mutate, isPending } = useMutation({
+    mutationKey: ["createnews"],
+    mutationFn: () => onCreate(),
+  });
 
   const onCreate = async () => {
     if (!titleRef.current || !subtitleRef.current || !imgRef.current || !value)
@@ -41,6 +48,11 @@ export default function IndexPage() {
 
   return (
     <AdminLayout>
+      {isPending && (
+        <div className="w-screen h-screen flex justify-center items-center absolute">
+          <SyncLoader color="#524FFF" />
+        </div>
+      )}
       <div className="flex w-full flex-col justify-center items-center px-4">
         <div className="container w-full">
           <h1
@@ -82,7 +94,9 @@ export default function IndexPage() {
           <MarkdownEditor height={400} value={value} onChange={setValue} />
 
           <div className="text-center my-8">
-            <NavigateButton onClick={onCreate}>Tạo</NavigateButton>
+            <NavigateButton isLoading={isPending} onClick={() => mutate()}>
+              Tạo
+            </NavigateButton>
           </div>
         </div>
       </div>

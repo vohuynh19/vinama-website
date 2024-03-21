@@ -117,7 +117,7 @@ export const updateNews = async ({
 
 export const deleteNews = async (id: string) => {
   const ref = doc(db, "news", id);
-  const res = deleteDoc(ref);
+  const res = await deleteDoc(ref);
   revalidateNewsById(id);
   return res;
 };

@@ -9,7 +9,7 @@ import { useEffect, useRef, useState } from "react";
 import { NavigateButton } from "@/components/button";
 import { title } from "@/components/primitives";
 import clsx from "clsx";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { deleteNews, getNews, updateNews } from "@/firebase/modules/news";
 import { toast } from "react-toastify";
 import { queryClient } from "@/config/client";
@@ -85,10 +85,20 @@ export default function IndexPage() {
     }
   };
 
+  const { mutate: editN, isPending: editLoading } = useMutation({
+    mutationKey: ["editnews"],
+    mutationFn: () => onEdit(),
+  });
+
+  const { mutate: deleteN, isPending: deleteLoading } = useMutation({
+    mutationKey: ["deletenews"],
+    mutationFn: () => onDelete(),
+  });
+
   return (
     <AdminLayout>
-      {isFetching && (
-        <div className="w-screen h-screen flex justify-center items-center absolute">
+      {(isFetching || editLoading || deleteLoading) && (
+        <div className="w-screen h-screen flex justify-center items-center absolute z-50">
           <SyncLoader color="#524FFF" />
         </div>
       )}
@@ -131,11 +141,19 @@ export default function IndexPage() {
           <MarkdownEditor height={400} value={value} onChange={setValue} />
 
           <div className="flex justify-center items-center text-center my-8">
-            <NavigateButton color="primary" onClick={onEdit}>
+            <NavigateButton
+              color="primary"
+              isLoading={editLoading}
+              onClick={() => editN()}
+            >
               Sửa
             </NavigateButton>
             <div className="w-[24px]" />
-            <NavigateButton color="danger" onClick={onDelete}>
+            <NavigateButton
+              color="danger"
+              isLoading={deleteLoading}
+              onClick={() => deleteN()}
+            >
               Xoá
             </NavigateButton>
           </div>
