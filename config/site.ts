@@ -38,5 +38,9 @@ export const siteConfig = {
       label: "Hình ảnh",
       href: "/admin/images",
     },
+    {
+      label: "Cấu hình",
+      href: "/admin/config",
+    },
   ],
 };

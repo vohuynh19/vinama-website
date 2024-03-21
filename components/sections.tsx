@@ -4,7 +4,7 @@ import { textConfig } from "@/config/text";
 import Image from "next/image";
 import { NavigateButton } from "./button";
 import { Button, Input, Pagination } from "@nextui-org/react";
-import { ArrowIcon, FacebookLogo, InstagramLogo, TwitterLogo } from "./icons";
+import { ArrowIcon, FacebookLogo, TiktokIcon, YoutubeIcon } from "./icons";
 import Link from "next/link";
 import { NewsInListItem, NewsItem, mockNewsData } from "./news";
 import { fontSaira } from "@/config/fonts";
@@ -16,6 +16,7 @@ import { useRouter } from "next/router";
 import { registerUser } from "@/firebase/modules/user";
 import { toast } from "react-toastify";
 import { SyncLoader } from "react-spinners";
+import { getConfig } from "@/firebase/modules/config";
 
 const CardComp: FC<{
   text: string;
@@ -242,6 +243,10 @@ export const ContactNowSection = () => {
 };
 
 export const SubcribeSection = () => {
+  const { data } = useQuery({
+    queryKey: ["config"],
+    queryFn: getConfig,
+  });
   const emailRef = useRef<HTMLInputElement>(null);
 
   const submitForm = async () => {
@@ -283,7 +288,7 @@ export const SubcribeSection = () => {
               "uppercase mb-4 font-black mt-24",
             )}
           >
-            {textConfig.common.phone}
+            {data?.phone || ""}
           </div>
 
           <div
@@ -295,7 +300,7 @@ export const SubcribeSection = () => {
               "uppercase mb-4 font-black",
             )}
           >
-            {textConfig.common.email}
+            {data?.email || ""}
           </div>
 
           <div className="h-[24px] xl:h-[80px]" />
@@ -339,25 +344,28 @@ export const SubcribeSection = () => {
 
           <div className="grid grid-cols-3 gap-8 mt-8">
             <Link
-              href={"/"}
+              target="_blank"
+              href={data?.facebook || ""}
               className="h-[80px] w-[80px] lg:h-[96px] lg:w-[96px] border-1 border-[#FFFFFF] rounded-xl flex justify-center items-center relative"
             >
               <div className="top-0 left-0 right-0 bottom-0 bg-[#183049] absolute rounded-xl opacity-30 z-0 hover:opacity-40"></div>
               <FacebookLogo />
             </Link>
             <Link
-              href={"/"}
+              target="_blank"
+              href={data?.tiktok || ""}
               className="h-[80px] w-[80px] lg:h-[96px] lg:w-[96px] border-1 border-[#FFFFFF] rounded-xl flex justify-center items-center relative"
             >
               <div className="top-0 left-0 right-0 bottom-0 bg-[#183049] absolute rounded-xl opacity-30 z-0 hover:opacity-40"></div>
-              <InstagramLogo />
+              <TiktokIcon />
             </Link>
             <Link
-              href={"/"}
+              target="_blank"
+              href={data?.youtube || ""}
               className="h-[80px] w-[80px] lg:h-[96px] lg:w-[96px] border-1 border-[#FFFFFF] rounded-xl flex justify-center items-center relative"
             >
               <div className="top-0 left-0 right-0 bottom-0 bg-[#183049] absolute rounded-xl opacity-30 z-0 hover:opacity-40"></div>
-              <TwitterLogo />
+              <YoutubeIcon />
             </Link>
           </div>
 

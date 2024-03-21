@@ -34,3 +34,12 @@ interface IImage {
   updatedAt: string;
   createdAt: string;
 }
+
+interface IConfig {
+  id: string;
+  email: string;
+  phone: string;
+  facebook: string;
+  youtube: string;
+  tiktok: string;
+}
