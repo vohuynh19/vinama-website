@@ -1,14 +1,12 @@
 import {
   addDoc,
   collection,
-  serverTimestamp,
   getDoc,
   updateDoc,
   deleteDoc,
   doc,
   getDocs,
   query,
-  orderBy,
   limit,
 } from "firebase/firestore";
 import { db } from "../init";
@@ -17,6 +15,23 @@ import moment from "moment";
 function sortByDate(dateString1: string, dateString2: string) {
   return new Date(dateString1) < new Date(dateString2) ? 1 : -1;
 }
+
+const revalidateNewsById = (id: string) => {
+  return fetch("/api/revalidate", {
+    method: "POST",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+    body: JSON.stringify({
+      path: `/news/${id}`,
+    }),
+  });
+};
 
 export const getPageNews = async (take = 10000): Promise<INews[]> => {
   const dataQuery = query(collection(db, "news"), limit(take));
@@ -50,7 +65,7 @@ export const getNews = async (id: string): Promise<INews> => {
   } as INews;
 };
 
-export const createNews = ({
+export const createNews = async ({
   title,
   subTitle,
   imageUri,
@@ -62,7 +77,7 @@ export const createNews = ({
   markdownContent: string;
 }) => {
   const collectionRef = collection(db, "news");
-  return addDoc(collectionRef, {
+  const res = await addDoc(collectionRef, {
     author: "admin",
     title,
     subTitle,
@@ -71,9 +86,11 @@ export const createNews = ({
     updatedAt: moment().toString(),
     createdAt: moment().toString(),
   });
+  await revalidateNewsById(res.id);
+  return res;
 };
 
-export const updateNews = ({
+export const updateNews = async ({
   id,
   title,
   subTitle,
@@ -87,16 +104,20 @@ export const updateNews = ({
   markdownContent: string;
 }) => {
   const ref = doc(db, "news", id);
-  return updateDoc(ref, {
+  const res = await updateDoc(ref, {
     title,
     subTitle,
     imageUri,
     markdownContent,
     updatedAt: moment().toString(),
   });
+  await revalidateNewsById(id);
+  return res;
 };
 
-export const deleteNews = (id: string) => {
+export const deleteNews = async (id: string) => {
   const ref = doc(db, "news", id);
-  return deleteDoc(ref);
+  const res = deleteDoc(ref);
+  await revalidateNewsById(id);
+  return res;
 };

@@ -5,12 +5,23 @@ import Image from "next/image";
 
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
-import { useQuery } from "@tanstack/react-query";
-import { useRouter } from "next/router";
-import { getNews } from "@/firebase/modules/news";
+import { getNews, getPageNews } from "@/firebase/modules/news";
 
 import { fontSaira } from "@/config/fonts";
 import dynamic from "next/dynamic";
+
+export async function getStaticPaths() {
+  const news = await getPageNews();
+  const paths = news.map((n) => ({
+    params: { id: n.id },
+  }));
+  return { paths, fallback: "blocking" };
+}
+
+export async function getStaticProps({ params }: { params: { id: string } }) {
+  const data = await getNews(params.id);
+  return { props: { data } };
+}
 
 const EditerMarkdown = dynamic(
   () =>
@@ -20,18 +31,7 @@ const EditerMarkdown = dynamic(
   { ssr: false },
 );
 
-export default function IndexPage() {
-  const router = useRouter();
-  const id = router.query.id as string;
-  const { data } = useQuery({
-    queryKey: ["news", id],
-    queryFn: () => getNews(id),
-  });
-
-  if (!data) {
-    return null;
-  }
-
+export default function IndexPage({ data }: { data: INews }) {
   return (
     <DefaultLayout>
       <div className="bg-black">
